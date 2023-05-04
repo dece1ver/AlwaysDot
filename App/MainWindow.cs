@@ -20,7 +20,7 @@ namespace App
     public partial class MainWindow : Form
     {
         private KeyboardListener _listener;
-        private FileSystemWatcher configWatcher;
+        private FileSystemWatcher _configWatcher;
         private static readonly string StartupDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
             @"Microsoft\Windows\Start Menu\Programs\Startup");
 
@@ -54,22 +54,21 @@ namespace App
         private void MainWindow_Load(object sender, EventArgs e)
         {
             UpdateVisibility();
-            configWatcher = new FileSystemWatcher
+            _configWatcher = new FileSystemWatcher
             {
                 Path = Program.BasePath,
                 Filter = "config.ini",
                 NotifyFilter = NotifyFilters.Attributes
-                               | NotifyFilters.CreationTime
-                               | NotifyFilters.DirectoryName
-                               | NotifyFilters.FileName
-                               | NotifyFilters.LastAccess
-                               | NotifyFilters.LastWrite
-                               | NotifyFilters.Security
-                               | NotifyFilters.Size
+                             | NotifyFilters.CreationTime
+                             | NotifyFilters.DirectoryName
+                             | NotifyFilters.FileName
+                             | NotifyFilters.LastWrite
+                             | NotifyFilters.Security
+                             | NotifyFilters.Size
             };
-            configWatcher.Changed += OnConfigChanged;
-            configWatcher.Deleted += OnConfigDeleted;
-            configWatcher.EnableRaisingEvents = true;
+            _configWatcher.Changed += OnConfigChanged;
+            _configWatcher.Deleted += OnConfigDeleted;
+            _configWatcher.EnableRaisingEvents = true;
             
             _listener = new KeyboardListener();
             _listener.HookKeyboard();
