@@ -191,5 +191,11 @@ namespace App
         }
 
         private static bool IsInstalled() => File.Exists(Program.ExePath);
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose();
+        }
     }
 }
